@@ -1,0 +1,41 @@
+<ion-view view-title="Places">
+    <ion-content class="content-gray" style="margin-top : 40px; margin-bottom : 40px">
+        <div class="list card" ng-repeat="place in places">
+            <div class="item">
+                <h2>{{place.furnishingStatus}} {{place.type.name}}</h2>
+                <!-- TODO : show ETA ?? -->
+                <!-- <p>November 05, 1955</p> -->
+                <span ng-if="place.distance">
+                        <i class="ion-ios-navigate-outline"></i> {{place.distance}}km,
+                    </span>
+                <span ng-if="place.travel_time_in_minutes">
+                        <i class="ion-android-time"></i> {{place.travel_time_in_minutes}} mins    
+                    </span>
+                <p class="item-checkbox item-checkbox-right">
+                    <label class="checkbox">
+                        <input ng-model="place.selected" ng-checked="place.selected" type="checkbox">
+                    </label>
+                </p>
+            </div>
+            <div class="item item-body">
+                <ion-slide-box on-slide-changed="slideHasChanged($index)">
+                    <ion-slide ng-repeat="img in place.images">
+                        <div class="box blue">
+                            <img class="full-image" ng-src="{{img}}">
+                        </div>
+                    </ion-slide>
+                </ion-slide-box>
+            </div>
+            <div class="item item-body">
+                <p>{{place.availability.join(", ")}}</p>
+                <h2><span>{{currency}}</span> {{place.rent}} <span>{{place.rentPeriod}}</span></h2>
+                <p><i class="icon ion-ios-location"></i> {{place.address}}</p>
+            </div>
+        </div>
+    </ion-content>
+    <div class="bar bar-footer bar-positive">
+        <div class="title">
+            <button class="button button-clear" ng-click="letsGo()">Let's Go!</button>
+        </div>
+    </div>
+</ion-view>
