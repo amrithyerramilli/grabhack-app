@@ -43,7 +43,7 @@ angular.module('grabhack', ['ionic', 'grabhack.controllers'])
     })
 
     .state('app.map', {
-        url: '/mpa',
+        url: '/map',
         views: {
             'menuContent': {
                 templateUrl: 'templates/map.html',

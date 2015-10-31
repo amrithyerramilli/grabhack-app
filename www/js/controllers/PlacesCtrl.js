@@ -31,6 +31,10 @@ function PlacesCtrl($scope, $rootScope, $state) {
         createdAt: moment(""),
         type: $scope.bhks[0],
         images: ["https://res.cloudinary.com/grabhouse/image/private/t_fit_640_480/v1445493398/web/listing/6CrdhcQHK/8edaf42f7244b277.jpg", "https://res.cloudinary.com/grabhouse/image/private/t_fit_640_480/v1445493393/web/listing/6CrdhcQHK/03bdf9664f249bc7.jpg"],
+        geolocation: {            
+            latitude: 12.920686, 
+            longitude: 77.649979
+        }
     }, {
         id: 2,
         availability: ["Individual"],
@@ -43,6 +47,10 @@ function PlacesCtrl($scope, $rootScope, $state) {
         createdAt: moment(""),
         type: $scope.bhks[0],
         images: ["https://res.cloudinary.com/grabhouse/image/private/t_fill_200_150/v1446291263/web/listing/6CGLi65JD/56be98fd756f82fd.jpg", "https://res.cloudinary.com/grabhouse/image/private/t_fill_200_150/v1446291254/web/listing/6CGLi65JD/c1168f2632cff82d.jpg", "https://res.cloudinary.com/grabhouse/image/private/t_fill_200_150/v1446291246/web/listing/6CGLi65JD/699b92807b277b58.jpg"],
+        geolocation: {            
+            latitude: 12.907495, 
+            longitude: 77.635073
+        }
     }, {
         id: 2,
         availability: ["Family"],
@@ -55,6 +63,10 @@ function PlacesCtrl($scope, $rootScope, $state) {
         createdAt: moment(""),
         type: $scope.bhks[2],
         images: ["https://res.cloudinary.com/grabhouse/image/private/t_fill_200_150/v1445493398/web/listing/6CrdhcQHK/8edaf42f7244b277.jpg", "https://res.cloudinary.com/grabhouse/image/private/t_fill_200_150/v1445493393/web/listing/6CrdhcQHK/03bdf9664f249bc7.jpg", "https://res.cloudinary.com/grabhouse/image/private/t_fill_200_150/v1445493403/web/listing/6CrdhcQHK/1972e3f435e4c8a7.jpg", "https://res.cloudinary.com/grabhouse/image/private/t_fill_200_150/v1445493409/web/listing/6CrdhcQHK/3d68268e244234da.jpg", "https://res.cloudinary.com/grabhouse/image/private/t_fill_200_150/v1445493388/web/listing/6CrdhcQHK/61cf73dfad7a2683.jpg"],
+        geolocation: {            
+            latitude: 12.915063, 
+            longitude: 77.634858
+        }
     }];
 
     $scope.letsGo = function() {
@@ -65,6 +77,8 @@ function PlacesCtrl($scope, $rootScope, $state) {
                 selectedPlaces.push(place);
         };
         $rootScope.selectedPlaces = selectedPlaces;
-        $state.go('/map');
+        // book cab to first selected place
+        
+        $state.go('app.map');
     }
 }
