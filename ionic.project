@@ -1,4 +1,10 @@
 {
   "name": "grabhack-app",
-  "app_id": ""
+  "app_id": "",
+  "proxies": [
+    {
+      "path": "/products",
+      "proxyUrl": "https://grabhack-logistics.eu-gb.mybluemix.net/products"
+    }    
+  ]
 }
