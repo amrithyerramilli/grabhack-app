@@ -1,4 +1,8 @@
-function PlaceCtrl($scope){
-	console.log("yo");
-	$scope.currentPlace = {};
+function PlaceCtrl($scope, WikitudeFactory) {
+    console.log("yo");
+    $scope.currentPlace = {};
+
+    $scope.gotoScene = function(ind) {
+        WikitudeFactory.callARView(ind);
+    }
 }

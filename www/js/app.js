@@ -4,7 +4,7 @@
 // 'grabhack' is the name of this angular module example (also set in a <body> attribute in index.html)
 // the 2nd parameter is an array of 'requires'
 // 'grabhack.controllers' is found in controllers.js
-angular.module('grabhack', ['ionic', 'grabhack.controllers'])
+var app = angular.module('grabhack', ['ionic', 'grabhack.controllers','grabhack-ar'])
 
 .run(function($ionicPlatform) {
     $ionicPlatform.ready(function() {

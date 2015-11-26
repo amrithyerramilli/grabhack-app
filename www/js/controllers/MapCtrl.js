@@ -1,4 +1,4 @@
-function MapCtrl($ionicPlatform, $timeout, $scope, $rootScope, $q, $state) {
+function MapCtrl($ionicPlatform, $timeout, $scope, $rootScope, $q, $state, WikitudeFactory) {
     $scope.geolocation = {};
     $scope.$on('$ionicView.enter', function(e) {
         $scope.$broadcast('show-loader');
@@ -44,13 +44,18 @@ function MapCtrl($ionicPlatform, $timeout, $scope, $rootScope, $q, $state) {
                             position: latLng
                         });
 
-                        google.maps.event.addListener(marker, 'click', (function(map, marker, place, state) {
+                        google.maps.event.addListener(marker, 'click', (function(map, marker, place, state, WikitudeFactory) {
                             return function() {
                                 var span = "<a href='#/app/places/" + place.id + "'><span id='marker-'" + place.id + ">" + place.address + "</span></a>"
+
+                                // var links = "<a href='javascript:WikitudeFactory.callARView(0);'><span id='marker-'" + place.id + ">" + "My room table" + "</span></a>"
+                                // + "<a href='javascript:WikitudeFactory.callARView(1);'><span id='marker-'" + place.id + ">" + "Creative room table" + "</span></a>"
+                                // + "<a href='javascript:WikitudeFactory.callARView(2);'><span id='marker-'" + place.id + ">" + "Guitar on bean bag" + "</span></a>"
+                                // + "<a href='javascript:WikitudeFactory.callARView(3);'><span id='marker-'" + place.id + ">" + "Reimbursement box" + "</span></a>";
                                 infowindow.setContent(span);
                                 infowindow.open(map, marker);
                             }
-                        })($scope.map, marker, place, $state));
+                        })($scope.map, marker, place, $state, WikitudeFactory));
                     }
 
                 });

@@ -1,4 +1,4 @@
-function PlacesCtrl($scope, $rootScope, $state) {
+function PlacesCtrl($scope, $rootScope, $state, $ionicModal, $http) {
     $scope.currency = "INR";
     $scope.bhks = [{
         id: 1,
@@ -31,8 +31,8 @@ function PlacesCtrl($scope, $rootScope, $state) {
         createdAt: moment(""),
         type: $scope.bhks[0],
         images: ["https://res.cloudinary.com/grabhouse/image/private/t_fit_640_480/v1445493398/web/listing/6CrdhcQHK/8edaf42f7244b277.jpg", "https://res.cloudinary.com/grabhouse/image/private/t_fit_640_480/v1445493393/web/listing/6CrdhcQHK/03bdf9664f249bc7.jpg"],
-        geolocation: {            
-            latitude: 12.920686, 
+        geolocation: {
+            latitude: 12.920686,
             longitude: 77.649979
         }
     }, {
@@ -47,8 +47,8 @@ function PlacesCtrl($scope, $rootScope, $state) {
         createdAt: moment(""),
         type: $scope.bhks[0],
         images: ["https://res.cloudinary.com/grabhouse/image/private/t_fill_200_150/v1446291263/web/listing/6CGLi65JD/56be98fd756f82fd.jpg", "https://res.cloudinary.com/grabhouse/image/private/t_fill_200_150/v1446291254/web/listing/6CGLi65JD/c1168f2632cff82d.jpg", "https://res.cloudinary.com/grabhouse/image/private/t_fill_200_150/v1446291246/web/listing/6CGLi65JD/699b92807b277b58.jpg"],
-        geolocation: {            
-            latitude: 12.907495, 
+        geolocation: {
+            latitude: 12.907495,
             longitude: 77.635073
         }
     }, {
@@ -63,13 +63,28 @@ function PlacesCtrl($scope, $rootScope, $state) {
         createdAt: moment(""),
         type: $scope.bhks[2],
         images: ["https://res.cloudinary.com/grabhouse/image/private/t_fill_200_150/v1445493398/web/listing/6CrdhcQHK/8edaf42f7244b277.jpg", "https://res.cloudinary.com/grabhouse/image/private/t_fill_200_150/v1445493393/web/listing/6CrdhcQHK/03bdf9664f249bc7.jpg", "https://res.cloudinary.com/grabhouse/image/private/t_fill_200_150/v1445493403/web/listing/6CrdhcQHK/1972e3f435e4c8a7.jpg", "https://res.cloudinary.com/grabhouse/image/private/t_fill_200_150/v1445493409/web/listing/6CrdhcQHK/3d68268e244234da.jpg", "https://res.cloudinary.com/grabhouse/image/private/t_fill_200_150/v1445493388/web/listing/6CrdhcQHK/61cf73dfad7a2683.jpg"],
-        geolocation: {            
-            latitude: 12.915063, 
+        geolocation: {
+            latitude: 12.915063,
             longitude: 77.634858
         }
     }];
 
+    $ionicModal.fromTemplateUrl('templates/cabs.html', {
+        scope: $scope
+    }).then(function(modal) {
+        $scope.modal = modal;
+    });
+    $scope.closeLogin = function() {
+        $scope.modal.hide();
+    };
+
+    $scope.go = function() {
+        $scope.closeLogin();
+        $state.go('app.map');
+    }
+
     $scope.letsGo = function() {
+        var getUrl = "https://grabhack-logistics.eu-gb.mybluemix.net/products";
         var selectedPlaces = [];
         for (var i = 0; i < $scope.places.length; i++) {
             var place = $scope.places[i];
@@ -77,8 +92,20 @@ function PlacesCtrl($scope, $rootScope, $state) {
                 selectedPlaces.push(place);
         };
         $rootScope.selectedPlaces = selectedPlaces;
+
         // book cab to first selected place
-        
-        $state.go('app.map');
+        var params = {
+            latitude: selectedPlaces[0].geolocation.latitude,
+            longitude: selectedPlaces[0].geolocation.longitude
+        };
+        $http.get(getUrl, {
+            params: params
+        }).then(function(response) {
+            $scope.bookedCab = response.data.products[0];
+            console.log($scope.bookedCab);
+            $scope.modal.show();
+        }, function(error) {
+            alert(error);
+        });
     }
 }
